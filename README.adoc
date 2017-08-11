@@ -12,7 +12,7 @@ You can inspect the files directly through this site, or you can use `git` to ob
     
     git clone https://github.com/ariel-ortiz/201713-tc3049.1.git tc3049
     
- 3. Change your current working directory to `tc3049`:
+3. Change your current working directory to `tc3049`:
 
     cd tc3049
 +
