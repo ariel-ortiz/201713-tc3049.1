@@ -42,11 +42,3 @@ class Course
   end
 
 end
-
-STUDENT_LIST = [Student.new(115, 'John', :male, 3.4),
-                Student.new(841, 'Mary', :female, 2.6),
-                Student.new(642, 'Matthew', :male, 4.0),
-                Student.new(884, 'Mark', :male, 1.8),
-                Student.new(536, 'Luke', :male, 2.6),
-                Student.new(716, 'Magdalene', :female, 3.8),
-                Student.new(780, 'Sapphira', :female, 2.1)]
