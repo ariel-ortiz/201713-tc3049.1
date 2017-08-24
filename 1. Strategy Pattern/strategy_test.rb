@@ -24,7 +24,7 @@ class StrategyTest < Minitest::Test
     @a.strategy = ComputeAverageGPAStrategy.new
     @b.strategy = ComputeAverageGPAStrategy.new
     assert_nil(@a.execute)
-    assert_equal(2.9, @b.execute)
+    assert_in_delta(2.9, @b.execute, 0.000001)
   end
 
   def test_best_gpa_strategy
