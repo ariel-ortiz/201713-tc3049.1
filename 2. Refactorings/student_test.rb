@@ -18,9 +18,9 @@ class StudentTest < Minitest::Test
     $stdout = @old_stdout
   end
 
-  def test_meh
-    @student1.meh
-    @student2.meh
+  def test_display_description
+    @student1.display_description
+    @student2.display_description
     assert_equal \
       "Name: John ID: 123\n"                                            \
       "Anual income: 10000\n"                                           \
