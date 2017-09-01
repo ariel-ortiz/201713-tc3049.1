@@ -26,13 +26,9 @@ class Student
     # Nothing reasonable to do if this student has currently no grades.
     return -1 if @grades.empty?
 
-    # A student is worthy of a scholarship if he/she has good grades and
-    # is poor.
-    sum = 0
-    @grades.each do |grade|
-      sum += grade
-    end
-    (average >= MINIMUM_GOOD_GRADE) and (@anual_income < MAXIMUM_POOR_INCOME)
+    has_good_grades = average >= MINIMUM_GOOD_GRADE
+    is_poor = @anual_income < MAXIMUM_POOR_INCOME
+    has_good_grades and is_poor
   end
   
   private
