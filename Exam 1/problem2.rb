@@ -1,6 +1,8 @@
 #==========================================================
-# Type your student ID and name here
+# Solution to problem 2.
 #==========================================================
+
+require 'observer'
 
 # Runtime exception class raised when a queue underflow
 # occurs.
@@ -11,8 +13,25 @@ end
 # using an array.
 class Queue
 
+  include Observable
+
   # The name for this queue.
   attr_reader :name
+
+  # An observer that can interact with the Observable module.
+  class Observer
+
+    # Initialize the observer with a block.
+    def initialize(block)
+      @block = block
+    end
+
+    # Called by the notify_observers method.
+    def update(queue, operation, item)
+      @block.call(queue, operation, item)
+    end
+
+  end
 
   # Initializes a queue with a name.
   def initialize(name)
@@ -24,6 +43,8 @@ class Queue
   # Returns the queue itself.
   def insert(item)
     @info << item
+    changed
+    notify_observers(self, :insert, item)
     self
   end
 
@@ -32,7 +53,10 @@ class Queue
   # is empty.
   def remove
     raise QueueUnderflow if empty?
-    @info.shift
+    result = @info.shift
+    changed
+    notify_observers(self, :remove, result)
+    result
   end
 
   # Returns the element at the front of this queue
@@ -52,6 +76,7 @@ class Queue
   # Adds the given block as an observer to this
   # queue.
   def add_observer(&block)
+    super(Observer.new(block))
   end
 
 end

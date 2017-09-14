@@ -1,5 +1,5 @@
 #==========================================================
-# Type your student ID and name here
+# Solution to problem 1.
 #==========================================================
 
 # Runtime exception class raised when a stack overflow
@@ -12,47 +12,27 @@ end
 class StackUnderflow < RuntimeError
 end
 
-# A stack (LIFO) data structure implemented
-# using an array with a fixed size.
-class ArrayStack
+# Base class for all stacks.
+class SuperDaddyOfAllStacks
 
-  STACK_SIZE = 10
-
-  # Initializes a new fixed size stack.
-  def initialize
-    @info = Array.new(STACK_SIZE)
-    @index = 0
-  end
-
-  # Push item at the top of this stack.
-  # Raises a StackOverflow exception if the stack
-  # is full. Returns the stack itself.
+  # Abstract method push.
   def push(item)
-    raise StackOverflow if full?
-    @info[@index] = item
-    @index += 1
-    self
+    raise 'Called abstract method: push'
   end
 
-  # Pop and return an item from the top of this stack.
-  # Raises a StackUnderflow exception if the stack
-  # is empty.
+  # Abstract method pop.
   def pop
-    raise StackUnderflow if empty?
-    @index -= 1
-    @info[@index]
+    raise 'Called abstract method: pop'
   end
 
-  # Returns true if this stack is empty, otherwise
-  # returns false.
+  # Abstract method empty?
   def empty?
-    @index == 0
+    raise 'Called abstract method: empty?'
   end
 
-  # Returns true if this stack is full, otherwise
-  # returns false.
+  # Abstract method full?
   def full?
-    @index == STACK_SIZE
+    raise 'Called abstract method: full?'
   end
 
   # Returns the element at the top of this stack
@@ -113,8 +93,53 @@ class ArrayStack
 end
 
 # A stack (LIFO) data structure implemented
+# using an array with a fixed size.
+class ArrayStack < SuperDaddyOfAllStacks
+
+  STACK_SIZE = 10
+
+  # Initializes a new fixed size stack.
+  def initialize
+    @info = Array.new(STACK_SIZE)
+    @index = 0
+  end
+
+  # Push item at the top of this stack.
+  # Raises a StackOverflow exception if the stack
+  # is full. Returns the stack itself.
+  def push(item)
+    raise StackOverflow if full?
+    @info[@index] = item
+    @index += 1
+    self
+  end
+
+  # Pop and return an item from the top of this stack.
+  # Raises a StackUnderflow exception if the stack
+  # is empty.
+  def pop
+    raise StackUnderflow if empty?
+    @index -= 1
+    @info[@index]
+  end
+
+  # Returns true if this stack is empty, otherwise
+  # returns false.
+  def empty?
+    @index == 0
+  end
+
+  # Returns true if this stack is full, otherwise
+  # returns false.
+  def full?
+    @index == STACK_SIZE
+  end
+
+end
+
+# A stack (LIFO) data structure implemented
 # using a linked list of variable size.
-class LinkedListStack
+class LinkedListStack < SuperDaddyOfAllStacks
 
   # Node class required for singly linked list.
   class Node
@@ -156,61 +181,6 @@ class LinkedListStack
   # Returns false given that a variable size stack
   # is never full.
   def full?
-    false
-  end
-
-  # Returns the element at the top of this stack
-  # without removing it. Raises a StackUnderflow
-  # exception if the stack is empty.
-  def peek
-    item = pop
-    push(item)
-    item
-  end
-
-  # Calls the given block once for each element in
-  # this stack, passing that element as a parameter.
-  def each(&block)
-    temp = []
-    while not empty?
-      temp << pop
-    end
-    temp.reverse.each {|item| push(item)}
-    temp.each(&block)
-  end
-
-  # Returns the number of elements in this stack.
-  def length
-    count = 0
-    each { count += 1 }
-    count
-  end
-
-  # Returns a string representation of this stack.
-  def to_s
-    'top -> [' + each.to_a.join(', ') + ']'
-  end
-
-  # Pushes all the elements in enumerable into this stack.
-  # Returns the stack itself.
-  def push_all(enumerable)
-    enumerable.each do |item|
-      push(item)
-    end
-    self
-  end
-
-  # Removes all elements from this stack.
-  def clear
-    while not empty?
-      pop
-    end
-  end
-
-  # Returns true if the given object is present in this
-  # stack, otherwise returns false.
-  def include?(object)
-    each {|item| return true if item == object }
     false
   end
 
