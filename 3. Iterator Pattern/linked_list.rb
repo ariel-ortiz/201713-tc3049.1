@@ -60,5 +60,15 @@ class LinkedList
     @sentinel.prev = node.prev
     e
   end
+  
+  # Yields to the given block for every element in 
+  # this list.
+  def each
+    current = @sentinel.next
+    while current != @sentinel
+      yield current.data
+      current = current.next
+    end
+  end
 
 end
