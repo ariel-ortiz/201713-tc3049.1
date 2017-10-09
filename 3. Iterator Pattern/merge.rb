@@ -15,11 +15,40 @@ class ArrayIterator
   def item
     @array[@index]
   end
-  
+
   def next_item
     value = @array[@index]
     @index += 1
     value
+  end
+end
+
+
+#--------------------------------------------------------------------
+# An adapter for the Enumerator class (external iterator).
+# We adapt the Enumerator class in order to have the same
+# interface as the ArrayIterator from [OLSEN] pp 128-129.
+class EnumeratorAdapter
+
+  def initialize(enum)
+    @enum = enum
+  end
+
+  def has_next?
+    begin
+      @enum.peek
+      true
+    rescue StopIteration
+      false
+    end
+  end
+
+  def next_item
+    has_next? ? @enum.next : nil
+  end
+
+  def item
+    has_next? ? @enum.peek : nil
   end
 end
 
@@ -29,8 +58,8 @@ end
 def merge(array1, array2)
   merged = []
 
-  iterator1 = ArrayIterator.new(array1)
-  iterator2 = ArrayIterator.new(array2)
+  iterator1 = EnumeratorAdapter.new(array1.to_enum)
+  iterator2 = EnumeratorAdapter.new(array2.to_enum)
 
   while (iterator1.has_next? and iterator2.has_next?)
     if iterator1.item < iterator2.item
