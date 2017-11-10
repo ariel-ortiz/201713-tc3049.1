@@ -1,0 +1,13 @@
+<h1><%= @title %></h1>
+<p>
+  <% 5.times do |index| %>
+    <%= index %> Hi!<br />
+  <% end %>
+</p>
+<p>
+  <ul>
+    <% @feelings.each do |feeling| %>
+    <li><%= feeling %></li>
+    <% end %>
+  </ul>
+</p>
